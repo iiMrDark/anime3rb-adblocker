@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="icons/icon128.png" width="96" alt="icon"/>
+<img src="icons/icon128.png?v=2" width="96" alt="icon"/>
 
 # Anime3rb Ad Blocker
 
@@ -13,7 +13,7 @@
 
 > **Watch anime the way it was meant to be — no ads, no modals, no interruptions.**
 
-<img src="logo.png" alt="Anime3rb" height="36"/>
+<img src="logo.png?v=2" alt="Anime3rb" height="80"/>
 
 </div>
 
@@ -73,7 +73,7 @@ DOM     → [Layer 3: content.js ISOLATED] → remaining elements swept and hidd
 
 ## Download Video
 
-<img align="right" src="cat.png" width="72" alt="pixel cat"/>
+<img align="right" src="cat.png?v=2" width="72" alt="pixel cat"/>
 
 On any episode page a **floating pixel-cat** appears in the bottom-left corner.
 
