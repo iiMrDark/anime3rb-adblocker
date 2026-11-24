@@ -134,7 +134,15 @@ chrome.runtime.onMessage.addListener((msg) => {
   renderPanel();
 });
 
-// Method A2: postMessage from player.js (MAIN world inside vid3rb iframe, fallback)
+// Method A2: CustomEvent injected by background.js directly into this frame
+window.addEventListener('__anubis_sources__', e => {
+  if (!e.detail?.length) return;
+  detectedSources = e.detail;
+  currentEpisodeTitle = getEpisodeTitle();
+  renderPanel();
+}, false);
+
+// Method A3: postMessage from player.js (MAIN world inside vid3rb iframe, fallback)
 window.addEventListener('message', e => {
   if (e.data?.type !== 'ANIME3RB_SOURCES' || !e.data.sources?.length) return;
   detectedSources = e.data.sources;

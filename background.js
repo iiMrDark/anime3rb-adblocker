@@ -71,41 +71,46 @@ chrome.webNavigation.onCommitted.addListener(details => {
   if (details.frameId === 0) return; // top frame only skipped, want sub-frames
   if (!details.url.includes('vid3rb.com/player/')) return;
 
-  // Small delay so the page JS has time to set video_sources
-  setTimeout(() => {
+  function tryExtract(tabId, frameId, attempt) {
     chrome.scripting.executeScript({
-      target: { tabId: details.tabId, frameIds: [details.frameId] },
+      target: { tabId, frameIds: [frameId] },
       world: 'MAIN',
       func: () => {
-        // Try to read video_sources; if not ready yet, poll briefly
-        function extract() {
-          if (window.video_sources?.length) return window.video_sources;
-          // Parse from inline script text as fallback
-          for (const s of document.querySelectorAll('script:not([src])')) {
-            const m = s.textContent.match(/var video_sources\s*=\s*(\[[\s\S]*?\]);/);
-            if (m) { try { return JSON.parse(m[1]); } catch(_) {} }
-          }
-          return null;
+        if (window.video_sources?.length) return window.video_sources;
+        for (const s of document.querySelectorAll('script:not([src])')) {
+          const m = s.textContent.match(/var video_sources\s*=\s*(\[[\s\S]*?\]);/);
+          if (m) { try { return JSON.parse(m[1]); } catch(_) {} }
         }
-        return new Promise(resolve => {
-          let tries = 0;
-          const t = setInterval(() => {
-            const r = extract();
-            if (r || ++tries > 20) { clearInterval(t); resolve(r || []); }
-          }, 300);
-        });
+        return null;
       },
     }).then(results => {
       const raw = results?.[0]?.result;
-      if (!raw?.length) return;
-      const sources = raw
-        .filter(s => s.src && !s.premium)
-        .map(s => ({ label: s.label || s.res + 'p', url: s.src, res: parseInt(s.res) || 0 }))
-        .sort((a, b) => b.res - a.res);
-      if (!sources.length) return;
-      chrome.tabs.sendMessage(details.tabId, { type: 'ANIME3RB_SOURCES', sources });
-    }).catch(() => {});
-  }, 800);
+      if (raw?.length) {
+        const sources = raw
+          .filter(s => s.src && !s.premium)
+          .map(s => ({ label: s.label || s.res + 'p', url: s.src, res: parseInt(s.res) || 0 }))
+          .sort((a, b) => b.res - a.res);
+        if (!sources.length) return;
+        // Inject a CustomEvent into the parent frame (frameId 0) so content.js always gets it
+        chrome.scripting.executeScript({
+          target: { tabId, frameIds: [0] },
+          world: 'ISOLATED',
+          func: (srcs) => {
+            window.dispatchEvent(new CustomEvent('__anubis_sources__', { detail: srcs }));
+          },
+          args: [sources],
+        }).catch(() => {});
+        // Also try sendMessage as backup
+        chrome.tabs.sendMessage(tabId, { type: 'ANIME3RB_SOURCES', sources }).catch(() => {});
+      } else if (attempt < 15) {
+        setTimeout(() => tryExtract(tabId, frameId, attempt + 1), 500);
+      }
+    }).catch(() => {
+      if (attempt < 15) setTimeout(() => tryExtract(tabId, frameId, attempt + 1), 500);
+    });
+  }
+
+  setTimeout(() => tryExtract(details.tabId, details.frameId, 0), 1000);
 }, { url: [{ hostContains: 'vid3rb.com' }] });
 
 // ── Message relay: popup requests stats ───────────────────────────────────
