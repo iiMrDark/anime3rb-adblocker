@@ -96,19 +96,20 @@ new MutationObserver(muts => {
     try { if (AD_SELECTORS.some(s => n.matches(s))) hideEl(n); } catch(_) {}
   }
   sweepAds(document);
-  // Re-inject panel if Livewire/Alpine wiped it from the DOM
   if (!document.getElementById(DOWNLOAD_BTN_ID) && document.body) {
     renderPanel();
   }
+  // Pick up download links added by Livewire after initial load
+  if (!detectedSources.length) fetchDownloads();
 }).observe(document.documentElement, { childList: true, subtree: true });
 
 setInterval(() => {
   sweepAds(document);
-  // Keep panel alive against full re-renders
   if (!document.getElementById(DOWNLOAD_BTN_ID) && document.body) {
     renderPanel();
   }
-}, 800);
+  if (!detectedSources.length) fetchDownloads();
+}, 2000);
 
 // ── 2. Block pushState/replaceState popunder trick ────────────────────────
 // (Handled in bypass.js MAIN world for page-level history API)
@@ -126,73 +127,32 @@ function sanitizeFilename(name) {
   return name.replace(/[/\\?%*:|"<>]/g, '-').replace(/\s+/g, '_').trim();
 }
 
-// Method A: sources sent by background.js after it injects into the player iframe
-chrome.runtime.onMessage.addListener((msg) => {
-  if (msg.type !== 'ANIME3RB_SOURCES' || !msg.sources?.length) return;
-  detectedSources = msg.sources;
-  currentEpisodeTitle = getEpisodeTitle();
-  renderPanel();
-});
+// Scrape the page's existing "تحميل مباشر" direct-download links from the DOM
+function scrapeDomDownloads() {
+  const sources = [];
+  document.querySelectorAll('a[href*="/download/"]').forEach(a => {
+    const href = a.href;
+    if (!href.includes('/download/')) return;
+    // Try to get quality label from text content or nearby elements
+    const text = a.closest('div,li,tr')?.textContent || a.textContent || '';
+    const qualMatch = text.match(/(\d{3,4}p(?:\s*HEVC)?)/i);
+    const label = qualMatch ? qualMatch[1].trim() : (a.textContent.trim() || 'Download');
+    if (!sources.find(s => s.url === href)) {
+      sources.push({ label, url: href, res: parseInt(label) || 0 });
+    }
+  });
+  sources.sort((a, b) => b.res - a.res);
+  return sources;
+}
 
-// Method A2: CustomEvent injected by background.js directly into this frame
-window.addEventListener('__anubis_sources__', e => {
-  if (!e.detail?.length) return;
-  detectedSources = e.detail;
-  currentEpisodeTitle = getEpisodeTitle();
-  renderPanel();
-}, false);
-
-// Method A3: postMessage from player.js (MAIN world inside vid3rb iframe, fallback)
-window.addEventListener('message', e => {
-  if (e.data?.type !== 'ANIME3RB_SOURCES' || !e.data.sources?.length) return;
-  detectedSources = e.data.sources;
-  currentEpisodeTitle = getEpisodeTitle();
-  renderPanel();
-}, false);
-
-// Method B: fetch via background service worker (no CORS restriction)
-function fetchSourcesDirect() {
+function fetchDownloads() {
   if (detectedSources.length) return;
-  let playerUrl = null;
-
-  // 1. iframe src directly in DOM
-  document.querySelectorAll('iframe').forEach(f => {
-    if (f.src?.includes('vid3rb.com')) playerUrl = f.src;
-  });
-  // 2. Livewire wire:snapshot component data
-  if (!playerUrl) {
-    document.querySelectorAll('[wire\\:snapshot]').forEach(el => {
-      try {
-        const snap = JSON.parse(el.getAttribute('wire:snapshot'));
-        const url = snap?.data?.video_url || snap?.data?.videoUrl ||
-                    snap?.data?.player_url || snap?.data?.playerUrl;
-        if (url?.includes('vid3rb.com')) playerUrl = url;
-      } catch(_) {}
-    });
+  const found = scrapeDomDownloads();
+  if (found.length) {
+    detectedSources = found;
+    currentEpisodeTitle = getEpisodeTitle();
+    renderPanel();
   }
-  // 3. Regex scan of raw HTML
-  if (!playerUrl) {
-    const m = document.documentElement.innerHTML
-      .match(/https?:\/\/[^"'<>\s]*vid3rb\.com\/player\/[^"'<>\s]+/);
-    if (m) playerUrl = m[0];
-  }
-  if (!playerUrl) return;
-
-  chrome.runtime.sendMessage({ type: 'FETCH_URL', url: playerUrl }, res => {
-    if (!res?.ok) return;
-    const m = res.text.match(/var video_sources\s*=\s*(\[[\s\S]*?\]);/);
-    if (!m) return;
-    try {
-      const sources = JSON.parse(m[1])
-        .filter(s => s.src && !s.premium)
-        .map(s => ({ label: s.label || s.res + 'p', url: s.src, res: parseInt(s.res) || 0 }))
-        .sort((a, b) => b.res - a.res);
-      if (!sources.length) return;
-      detectedSources = sources;
-      currentEpisodeTitle = getEpisodeTitle();
-      renderPanel();
-    } catch(_) {}
-  });
 }
 
 function renderPanel() {
@@ -280,9 +240,9 @@ function initPanel() {
   detectedSources = [];
   currentEpisodeTitle = getEpisodeTitle();
   renderPanel();
-  // Also try direct fetch as a belt-and-suspenders fallback
-  setTimeout(fetchSourcesDirect, 3000);
-  setTimeout(() => { if (!detectedSources.length) fetchSourcesDirect(); }, 7000);
+  // Scrape existing download links from DOM (they're already on the page)
+  setTimeout(fetchDownloads, 1000);
+  setTimeout(() => { if (!detectedSources.length) fetchDownloads(); }, 3000);
 }
 
 if (document.readyState === 'loading') {

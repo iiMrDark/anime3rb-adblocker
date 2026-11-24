@@ -7,7 +7,6 @@
 [![Chrome Extension](https://img.shields.io/badge/Chrome-Extension-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white)](https://developer.chrome.com/docs/extensions/)
 [![Manifest V3](https://img.shields.io/badge/Manifest-V3-7c3aed?style=for-the-badge&logo=googlechrome&logoColor=white)](https://developer.chrome.com/docs/extensions/mv3/intro/)
 [![Version](https://img.shields.io/badge/Version-2.0-22c55e?style=for-the-badge)](https://github.com/iiMrDark/anime3rb-adblocker)
-[![License](https://img.shields.io/badge/License-MIT-f59e0b?style=for-the-badge)](LICENSE)
 
 **A powerful Chrome extension that eliminates all ads, popups, and anti-adblock walls on [anime3rb.com](https://anime3rb.com) — with a built-in video downloader.**
 
@@ -84,7 +83,7 @@ On any episode page, a **floating pixel-cat button** appears in the bottom-left 
 2. The panel opens showing the available qualities for the current episode (e.g. `1080p`, `720p`, `480p`)
 3. Click a quality button — the video downloads directly via your browser
 
-> **How it finds the video:** The background service worker listens for the vid3rb.com player iframe to load, injects into it with MAIN world access, reads the `video_sources` JS variable, and sends the URLs back to the page — no scraping, no guessing.
+> **How it finds the video:** The extension scrapes the existing direct-download links (`/download/...`) that anime3rb.com already places on every episode page — no iframe injection, no guessing, instant results.
 
 ---
 
@@ -103,12 +102,6 @@ On any episode page, a **floating pixel-cat button** appears in the bottom-left 
 | `cat.png` | Pixel cat mascot (download button icon) |
 | `bg.png` | Anime background for popup |
 | `icons/` | Extension icons at 16×16, 48×48, 128×128 |
-
----
-
-## 📄 License
-
-MIT License — see [LICENSE](LICENSE) for details.
 
 ---
 
