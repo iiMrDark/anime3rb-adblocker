@@ -1,0 +1,77 @@
+{
+  "manifest_version": 3,
+  "name": "Anime3rb Ad Blocker",
+  "version": "2.0.0",
+  "description": "Blocks ads & popups on anime3rb.com. Download episodes in any quality.",
+  "permissions": [
+    "declarativeNetRequest",
+    "scripting",
+    "storage",
+    "tabs",
+    "webRequest",
+    "webNavigation"
+  ],
+  "host_permissions": [
+    "*://*.anime3rb.com/*",
+    "*://anime3rb.com/*",
+    "*://*.anime3rb.net/*",
+    "*://*.vid3rb.com/*",
+    "*://vid3rb.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["*://*.anime3rb.com/*"],
+      "js": ["bypass.js"],
+      "run_at": "document_start",
+      "world": "MAIN",
+      "all_frames": false
+    },
+    {
+      "matches": ["*://*.anime3rb.com/*"],
+      "js": ["content.js"],
+      "css": ["blocker.css"],
+      "run_at": "document_idle",
+      "world": "ISOLATED",
+      "all_frames": false
+    },
+    {
+      "matches": ["*://*.vid3rb.com/player/*", "*://vid3rb.com/player/*"],
+      "js": ["player.js"],
+      "run_at": "document_idle",
+      "world": "MAIN",
+      "all_frames": true
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "action": {
+    "default_title": "Anime3rb Ad Blocker",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["cat.png", "logo.png"],
+      "matches": ["*://*.anime3rb.com/*"]
+    }
+  ]
+}

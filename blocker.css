@@ -1,0 +1,96 @@
+/* ── Anime3rb Ad Blocker ── CSS injection (runs at document_start) ── */
+
+/* Generic ad slot selectors */
+[class*="adsbygoogle"],
+[id*="adsbygoogle"],
+[class*="ad-container"],
+[class*="ad-wrapper"],
+[class*="ad-banner"],
+[class*="ad-slot"],
+[class*="ad-block"],
+[class*="ad-box"],
+[class*="ads-container"],
+[class*="ads-wrapper"],
+[class*="banner-ad"],
+[class*="banner-ads"],
+[id*="ad-container"],
+[id*="ad-wrapper"],
+[id*="ad-banner"],
+[id*="ad-slot"],
+[id*="ads-container"],
+ins.adsbygoogle,
+[data-ad-client],
+[data-ad-slot] {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  height: 0 !important;
+  max-height: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Popups / modals / overlays */
+[class*="popup"]:not([class*="dropdown"]):not([class*="search"]),
+[class*="pop-up"]:not([class*="dropdown"]),
+[class*="modal-overlay"],
+[class*="ad-overlay"],
+[class*="interstitial"],
+[id*="popup"]:not([id*="search"]):not([id*="notification"]),
+[id*="interstitial"],
+[class*="overlay"]:not([class*="video"]):not([class*="player"]):not([class*="loading"]) {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* Floating / fixed position ads */
+div[style*="position: fixed"][style*="z-index"],
+div[style*="position:fixed"][style*="z-index"] {
+  /* handled by JS to avoid false positives */
+}
+
+/* Video ad banners inside players */
+.ytp-ad-module,
+.ytp-ad-overlay-container,
+.ytp-ad-player-overlay,
+[class*="preroll"],
+[class*="midroll"],
+[id*="preroll"],
+[id*="midroll"] {
+  display: none !important;
+}
+
+/* Prevent body scroll-lock from popups */
+body.modal-open,
+body.overflow-hidden,
+html.modal-open {
+  overflow: auto !important;
+}
+
+/* ── Anime3rb specific anti-adblock wall ──────────────────────────────── */
+
+/* The known adblock modal container */
+#pnfzf29w,
+[id="pnfzf29w"] {
+  display: none !important;
+}
+
+/* Full-screen clickjack overlay link to hai8g / ad network */
+a[href*="hai8g.com"],
+a[href*="llvpn.com"],
+a[href*="popunder"] {
+  display: none !important;
+  pointer-events: none !important;
+}
+
+/* Fixed full-viewport overlay backdrop spawned by the adblock detector */
+/* targets: class="fixed h-full top-0 right-0 left-0 bg-black/60 overflow-auto z-50" */
+.fixed.overflow-auto.z-50:has(a[href*="hai8g"]),
+.fixed.overflow-auto.z-50:has([id*="pnfzf"]),
+div[class*="bg-black"]:has(a[href*="hai8g"]),
+div[class*="bg-black"]:has([id*="pnfzf"]) {
+  display: none !important;
+}
+
+/* The llvpn/hai8g ad script injected <script> tag — no visual effect but
+   the declarativeNetRequest rule blocks it at the network layer */

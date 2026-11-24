@@ -1,0 +1,264 @@
+[
+  {
+    "id": 1,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "*doubleclick*",
+      "resourceTypes": ["script", "xmlhttprequest", "sub_frame", "image", "media"]
+    }
+  },
+  {
+    "id": 2,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "*googlesyndication*",
+      "resourceTypes": ["script", "xmlhttprequest", "sub_frame", "image", "media"]
+    }
+  },
+  {
+    "id": 3,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "*adservice.google*",
+      "resourceTypes": ["script", "xmlhttprequest", "sub_frame", "image", "media"]
+    }
+  },
+  {
+    "id": 4,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "*exoclick*",
+      "resourceTypes": ["script", "xmlhttprequest", "sub_frame", "image", "media"]
+    }
+  },
+  {
+    "id": 5,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "*propellerads*",
+      "resourceTypes": ["script", "xmlhttprequest", "sub_frame", "image", "media"]
+    }
+  },
+  {
+    "id": 6,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "*popcash*",
+      "resourceTypes": ["script", "xmlhttprequest", "sub_frame", "image", "media"]
+    }
+  },
+  {
+    "id": 7,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "*popads*",
+      "resourceTypes": ["script", "xmlhttprequest", "sub_frame", "image", "media"]
+    }
+  },
+  {
+    "id": 8,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "*adsterra*",
+      "resourceTypes": ["script", "xmlhttprequest", "sub_frame", "image", "media"]
+    }
+  },
+  {
+    "id": 9,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "*trafficjunky*",
+      "resourceTypes": ["script", "xmlhttprequest", "sub_frame", "image", "media"]
+    }
+  },
+  {
+    "id": 10,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "*juicyads*",
+      "resourceTypes": ["script", "xmlhttprequest", "sub_frame", "image", "media"]
+    }
+  },
+  {
+    "id": 11,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "*hilltopads*",
+      "resourceTypes": ["script", "xmlhttprequest", "sub_frame", "image", "media"]
+    }
+  },
+  {
+    "id": 12,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "*mgid.com*",
+      "resourceTypes": ["script", "xmlhttprequest", "sub_frame", "image", "media"]
+    }
+  },
+  {
+    "id": 13,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "*taboola*",
+      "resourceTypes": ["script", "xmlhttprequest", "sub_frame", "image", "media"]
+    }
+  },
+  {
+    "id": 14,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "*outbrain*",
+      "resourceTypes": ["script", "xmlhttprequest", "sub_frame", "image", "media"]
+    }
+  },
+  {
+    "id": 15,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "*revcontent*",
+      "resourceTypes": ["script", "xmlhttprequest", "sub_frame", "image", "media"]
+    }
+  },
+  {
+    "id": 16,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "*popunder*",
+      "resourceTypes": ["script", "xmlhttprequest", "sub_frame", "image", "media"]
+    }
+  },
+  {
+    "id": 17,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "*valueimpression*",
+      "resourceTypes": ["script", "xmlhttprequest", "sub_frame", "image", "media"]
+    }
+  },
+  {
+    "id": 18,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "*adskeeper*",
+      "resourceTypes": ["script", "xmlhttprequest", "sub_frame", "image", "media"]
+    }
+  },
+  {
+    "id": 19,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "*bidvertiser*",
+      "resourceTypes": ["script", "xmlhttprequest", "sub_frame", "image", "media"]
+    }
+  },
+  {
+    "id": 20,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "*adcash*",
+      "resourceTypes": ["script", "xmlhttprequest", "sub_frame", "image", "media"]
+    }
+  },
+  {
+    "id": 21,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "*a-ads.com*",
+      "resourceTypes": ["script", "xmlhttprequest", "sub_frame", "image", "media"]
+    }
+  },
+  {
+    "id": 22,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "*monetag*",
+      "resourceTypes": ["script", "xmlhttprequest", "sub_frame", "image", "media"]
+    }
+  },
+  {
+    "id": 23,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "*adnxs.com*",
+      "resourceTypes": ["script", "xmlhttprequest", "sub_frame", "image", "media"]
+    }
+  },
+  {
+    "id": 24,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "*media.net*",
+      "resourceTypes": ["script", "xmlhttprequest", "sub_frame", "image", "media"]
+    }
+  },
+  {
+    "id": 25,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "*amazon-adsystem*",
+      "resourceTypes": ["script", "xmlhttprequest", "sub_frame", "image", "media"]
+    }
+  },
+  {
+    "id": 26,
+    "priority": 2,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "*llvpn.com*",
+      "resourceTypes": ["script", "xmlhttprequest", "sub_frame", "image", "media", "other"]
+    }
+  },
+  {
+    "id": 27,
+    "priority": 2,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "*hai8g.com*",
+      "resourceTypes": ["script", "xmlhttprequest", "sub_frame", "image", "media", "other"]
+    }
+  },
+  {
+    "id": 28,
+    "priority": 2,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "*llvpn.*",
+      "resourceTypes": ["script", "xmlhttprequest", "sub_frame", "image", "media", "other"]
+    }
+  },
+  {
+    "id": 29,
+    "priority": 2,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "*tag.min.js*",
+      "initiatorDomains": ["anime3rb.com"],
+      "resourceTypes": ["script"]
+    }
+  }
+]
