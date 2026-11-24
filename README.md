@@ -14,6 +14,10 @@
 
 <img src="logo.png" alt="Anime3rb" height="40">
 
+<br/>
+
+<img src="screenshots/popup.png" alt="Extension Popup" width="260" style="border-radius:16px; box-shadow: 0 8px 32px rgba(0,0,0,0.5);">
+
 </div>
 
 ---
@@ -87,23 +91,6 @@ On any episode page, a **floating pixel-cat button** appears in the bottom-left 
 
 ---
 
-## 📁 Files
-
-| File | Description |
-|------|-------------|
-| `manifest.json` | Extension manifest (MV3), permissions, content script declarations |
-| `bypass.js` | MAIN world script — patches Alpine.js, spoofs ad globals, blocks modal events |
-| `content.js` | ISOLATED world — DOM sweep, ad removal, download panel UI |
-| `player.js` | MAIN world on vid3rb.com — reads `window.video_sources` from the player iframe |
-| `background.js` | Service worker — blocked request counter, webNavigation iframe injection, fetch relay |
-| `rules.json` | 29 declarativeNetRequest block rules |
-| `blocker.css` | CSS injected at document_start to hide ad elements instantly |
-| `popup.html` | Extension popup UI |
-| `cat.png` | Pixel cat mascot (download button icon) |
-| `bg.png` | Anime background for popup |
-| `icons/` | Extension icons at 16×16, 48×48, 128×128 |
-
----
 
 <div align="center">
 
