@@ -21,6 +21,23 @@
 
 ---
 
+## Installation
+
+> No Web Store listing yet — load it as an unpacked extension:
+
+```bash
+git clone https://github.com/iiMrDark/anime3rb-adblocker.git
+```
+
+1. Open `chrome://extensions/`
+2. Enable **Developer mode** (top-right toggle)
+3. Click **Load unpacked** → select the cloned folder
+4. Done — visit [anime3rb.com](https://anime3rb.com)
+
+Or download the latest **[Release ZIP](https://github.com/iiMrDark/anime3rb-adblocker/releases)** and load that folder instead.
+
+---
+
 ## What it does
 
 A Chrome extension built for [anime3rb.com](https://anime3rb.com) that silently kills every ad, popup, and anti-adblock wall the moment the page loads — and adds a floating download button so you can save any episode in your preferred quality with one click.
@@ -52,15 +69,6 @@ Page JS → [Layer 2: bypass.js MAIN world] → ad globals spoofed, modal events
 DOM     → [Layer 3: content.js ISOLATED] → remaining elements swept and hidden
 ```
 
-**Layer 1 — Network rules** (`rules.json`)
-Declarative block rules for 29+ ad networks. No JS overhead — the browser engine handles it.
-
-**Layer 2 — JS bypass** (`bypass.js`)
-Injected at `document_start` in the page's own JS context. Spoofs `window.adsbygoogle`, `window.googletag`, intercepts the Alpine.js `open-dialog` event that triggers the adblock modal, and kills the countdown timer.
-
-**Layer 3 — DOM sweep** (`content.js`)
-CSS selector sweep + MutationObserver on every DOM mutation + interval check. Catches anything that renders dynamically after load.
-
 ---
 
 ## Download Video
@@ -76,23 +84,6 @@ On any episode page a **floating pixel-cat** appears in the bottom-left corner.
 The extension reads the direct-download links that anime3rb already provides on every episode page. No scraping the player, no guessing — instant, reliable.
 
 <br clear="right"/>
-
----
-
-## Installation
-
-> No Web Store listing yet — load it as an unpacked extension:
-
-```bash
-git clone https://github.com/iiMrDark/anime3rb-adblocker.git
-```
-
-1. Open `chrome://extensions/`
-2. Enable **Developer mode** (top-right toggle)
-3. Click **Load unpacked** → select the cloned folder
-4. Done — visit [anime3rb.com](https://anime3rb.com)
-
-Or download the latest **[Release ZIP](https://github.com/iiMrDark/anime3rb-adblocker/releases)** and load that folder instead.
 
 ---
 
