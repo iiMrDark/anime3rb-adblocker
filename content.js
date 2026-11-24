@@ -252,4 +252,23 @@ if (document.readyState === 'loading') {
 // Livewire v3 fires this after SPA navigation
 document.addEventListener('livewire:navigated', () => { detectedSources = []; initPanel(); });
 
+// ── 5. Replace site header logo with extension logo ──────────────────────────
+function swapSiteLogo() {
+  const logoUrl = chrome.runtime.getURL('logo.png');
+  const extBase = chrome.runtime.getURL('');
+  document.querySelectorAll('header img, nav img, .navbar img, .logo img, a.logo img, [class*="logo"] img').forEach(img => {
+    if (!img.src.startsWith(extBase)) {
+      img.src = logoUrl;
+      img.style.cssText = 'height:40px;width:auto;object-fit:contain;visibility:visible';
+    } else {
+      img.style.visibility = 'visible';
+    }
+  });
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', swapSiteLogo);
+} else { swapSiteLogo(); }
+document.addEventListener('livewire:navigated', swapSiteLogo);
+
 console.log('[Anime3rb AdBlocker v2] Content ✓');

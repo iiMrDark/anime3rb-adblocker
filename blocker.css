@@ -1,5 +1,10 @@
 /* ── Anime3rb Ad Blocker ── CSS injection (runs at document_start) ── */
 
+/* Hide header logos instantly so the swap has no flash */
+header img, nav img, .navbar img, .logo img, a.logo img, [class*="logo"] img {
+  visibility: hidden;
+}
+
 /* Generic ad slot selectors */
 [class*="adsbygoogle"],
 [id*="adsbygoogle"],

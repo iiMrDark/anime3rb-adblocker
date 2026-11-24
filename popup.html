@@ -48,18 +48,20 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
+      gap: 0;
       padding: 36px 24px 26px;
     }
 
+    .spacer { flex: 1; }
+
     /* Main logo — centered */
     .main-logo {
-      width: 110px;
-      height: 110px;
+      width: 260px;
+      height: auto;
       object-fit: contain;
-      image-rendering: pixelated;
       display: block;
-      filter: drop-shadow(0 6px 24px rgba(99,102,241,.5));
+      margin: auto;
     }
 
     /* ── Bottom section ── */
@@ -132,7 +134,9 @@
 
 <div class="content">
 
-  <img class="main-logo" src="cat.png" alt="Anime3rb Ad Blocker"/>
+  <div class="spacer"></div>
+  <img class="main-logo" src="logo.png" alt="Anime3rb Ad Blocker"/>
+  <div class="spacer"></div>
 
   <div class="bottom">
     <a class="gh-btn" href="https://github.com/iiMrDark/anime3rb-adblocker" target="_blank">
