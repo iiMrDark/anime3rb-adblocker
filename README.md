@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="icons/icon128.png" alt="Anime3rb Ad Blocker" width="128" height="128">
+
 # 🛡️ Anime3rb Ad Blocker
 
 [![Chrome Extension](https://img.shields.io/badge/Chrome-Extension-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white)](https://developer.chrome.com/docs/extensions/)
@@ -9,7 +11,9 @@
 
 **A powerful Chrome extension that eliminates all ads, popups, and anti-adblock walls on [anime3rb.com](https://anime3rb.com) — with a built-in video downloader.**
 
-*إضافة كروم تحجب جميع الإعلانات والنوافذ المنبثقة على موقع أنمي:rb مع خاصية تحميل الحلقات مباشرة.*
+*Watch anime without interruptions — no ads, no anti-adblock modals, no popups.*
+
+<img src="logo.png" alt="Anime3rb" height="40">
 
 </div>
 
@@ -73,6 +77,8 @@ Runs in an **ISOLATED world** at `document_idle`:
 ## 🎞️ Download Video
 
 On any episode page, a **floating pixel-cat button** appears in the bottom-left corner.
+
+<img src="cat.png" alt="Pixel Cat Download Button" width="64">
 
 1. Click the cat 🐱
 2. The panel opens showing the available qualities for the current episode (e.g. `1080p`, `720p`, `480p`)
