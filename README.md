@@ -1,99 +1,103 @@
 <div align="center">
 
-<img src="icons/icon128.png" alt="Anime3rb Ad Blocker" width="128" height="128">
+<img src="icons/icon128.png" width="96" alt="icon"/>
 
-# 🛡️ Anime3rb Ad Blocker
+# Anime3rb Ad Blocker
 
-[![Chrome Extension](https://img.shields.io/badge/Chrome-Extension-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white)](https://developer.chrome.com/docs/extensions/)
-[![Manifest V3](https://img.shields.io/badge/Manifest-V3-7c3aed?style=for-the-badge&logo=googlechrome&logoColor=white)](https://developer.chrome.com/docs/extensions/mv3/intro/)
-[![Version](https://img.shields.io/badge/Version-2.0-22c55e?style=for-the-badge)](https://github.com/iiMrDark/anime3rb-adblocker)
-
-**A powerful Chrome extension that eliminates all ads, popups, and anti-adblock walls on [anime3rb.com](https://anime3rb.com) — with a built-in video downloader.**
-
-*Watch anime without interruptions — no ads, no anti-adblock modals, no popups.*
-
-<img src="logo.png" alt="Anime3rb" height="40">
+[![Chrome](https://img.shields.io/badge/Chrome-Extension-4285F4?style=flat-square&logo=googlechrome&logoColor=white)](https://developer.chrome.com/docs/extensions/)
+[![MV3](https://img.shields.io/badge/Manifest-V3-7c3aed?style=flat-square)](https://developer.chrome.com/docs/extensions/mv3/intro/)
+[![Version](https://img.shields.io/badge/version-2.0-22c55e?style=flat-square)](https://github.com/iiMrDark/anime3rb-adblocker/releases)
+[![Made by iiMrDark](https://img.shields.io/badge/by-iiMrDark-7c3aed?style=flat-square)](https://github.com/iiMrDark)
 
 <br/>
 
-<img src="screenshots/popup.png" alt="Extension Popup" width="260" style="border-radius:16px; box-shadow: 0 8px 32px rgba(0,0,0,0.5);">
+> **Watch anime the way it was meant to be — no ads, no modals, no interruptions.**
+
+<img src="logo.png" alt="Anime3rb" height="36"/>
 
 </div>
 
----
-
-## ✨ Features
-
-- 🌐 **29+ Ad Networks Blocked** — declarativeNetRequest rules kill requests at the network level before they load
-- 🚫 **Anti-Adblock Wall Bypassed** — patches Alpine.js event dispatch and spoofs ad globals so the site never shows its "please disable adblock" modal
-- 🧹 **DOM Sweep** — MutationObserver continuously removes popups, overlays, and injected ad elements
-- 🔇 **Popunder Blocker** — intercepts `window.open` calls to known ad domains
-- 🎞️ **In-Page Video Downloader** — floating cat button on every episode page; pick your quality and download directly
-- 📊 **Blocked Request Counter** — badge on the extension icon shows how many requests were blocked this session
+<br/>
 
 ---
 
-## 🔧 How It Works
+## What it does
 
-The extension uses a **3-layer protection system**:
+A Chrome extension built for [anime3rb.com](https://anime3rb.com) that silently kills every ad, popup, and anti-adblock wall the moment the page loads — and adds a floating download button so you can save any episode in your preferred quality with one click.
 
-### Layer 1 — Network Rules
-`rules.json` contains 29 `declarativeNetRequest` rules that block ad network domains (DoubleClick, ExoClick, PropellerAds, llvpn.com, hai8g.com, and more) **before** the browser even makes the request.
-
-### Layer 2 — JavaScript Bypass (`bypass.js`)
-Runs in the **page's MAIN world** at `document_start`, before Alpine.js or Livewire initialise:
-- Spoofs `window.adsbygoogle`, `window.googletag`, `window.google_jobrunner`
-- Patches `EventTarget.prototype.dispatchEvent` to intercept the `open-dialog` event that opens the anti-adblock modal (`#pnfzf29w`)
-- Patches `window.setInterval` to drop the countdown timer the modal uses
-- Blocks `window.open` to ad destinations
-
-### Layer 3 — DOM Sweep (`content.js`)
-Runs in an **ISOLATED world** at `document_idle`:
-- CSS selector sweep hides any surviving ad elements
-- MutationObserver re-runs the sweep on every DOM change
-- `setInterval` sweep every 800ms as a final safety net
+No configuration. No toggles. Install and forget.
 
 ---
 
-## 📦 Installation
+## Features
 
-> Chrome Web Store listing coming soon. For now, load it unpacked:
-
-1. **Download or clone** this repository
-   ```bash
-   git clone https://github.com/iiMrDark/anime3rb-adblocker.git
-   ```
-
-2. Open Chrome and navigate to:
-   ```
-   chrome://extensions/
-   ```
-
-3. Enable **Developer mode** (toggle in the top-right corner)
-
-4. Click **"Load unpacked"** and select the `anime3rb-adblocker` folder
-
-5. The extension icon will appear in your toolbar — visit [anime3rb.com](https://anime3rb.com) and enjoy ad-free anime 🎉
+| | |
+|---|---|
+| 🛡️ **Network-level blocking** | 29+ ad network domains blocked before the browser even makes the request — via `declarativeNetRequest` |
+| 🔮 **Anti-adblock bypass** | Patches Alpine.js event dispatch and spoofs ad globals so the site never shows its "disable adblock" wall |
+| 🧹 **Live DOM sweep** | MutationObserver + interval sweeper continuously removes any ad elements that slip through |
+| 🔇 **Popunder trap** | Intercepts `window.open` calls to ad domains at the JS level |
+| 🐱 **In-page downloader** | Floating pixel-cat button on every episode — click to pick quality and download instantly |
+| 🔢 **Block counter** | Extension badge shows how many requests were blocked this session |
 
 ---
 
-## 🎞️ Download Video
+## How it works
 
-On any episode page, a **floating pixel-cat button** appears in the bottom-left corner.
+Three layers run in sequence on every page load:
 
-<img src="cat.png" alt="Pixel Cat Download Button" width="64">
+```
+Request → [Layer 1: Network Rules] → blocked before it loads
+Page JS → [Layer 2: bypass.js MAIN world] → ad globals spoofed, modal events intercepted
+DOM     → [Layer 3: content.js ISOLATED] → remaining elements swept and hidden
+```
 
-1. Click the cat 🐱
-2. The panel opens showing the available qualities for the current episode (e.g. `1080p`, `720p`, `480p`)
-3. Click a quality button — the video downloads directly via your browser
+**Layer 1 — Network rules** (`rules.json`)
+Declarative block rules for 29+ ad networks. No JS overhead — the browser engine handles it.
 
-> **How it finds the video:** The extension scrapes the existing direct-download links (`/download/...`) that anime3rb.com already places on every episode page — no iframe injection, no guessing, instant results.
+**Layer 2 — JS bypass** (`bypass.js`)
+Injected at `document_start` in the page's own JS context. Spoofs `window.adsbygoogle`, `window.googletag`, intercepts the Alpine.js `open-dialog` event that triggers the adblock modal, and kills the countdown timer.
+
+**Layer 3 — DOM sweep** (`content.js`)
+CSS selector sweep + MutationObserver on every DOM mutation + interval check. Catches anything that renders dynamically after load.
 
 ---
 
+## Download Video
+
+<img align="right" src="cat.png" width="72" alt="pixel cat"/>
+
+On any episode page a **floating pixel-cat** appears in the bottom-left corner.
+
+1. Click the cat
+2. A panel slides open with the available qualities (`1080p HEVC`, `1080p`, `720p`, `480p` …)
+3. Click a quality — it opens the download in a new tab
+
+The extension reads the direct-download links that anime3rb already provides on every episode page. No scraping the player, no guessing — instant, reliable.
+
+<br clear="right"/>
+
+---
+
+## Installation
+
+> No Web Store listing yet — load it as an unpacked extension:
+
+```bash
+git clone https://github.com/iiMrDark/anime3rb-adblocker.git
+```
+
+1. Open `chrome://extensions/`
+2. Enable **Developer mode** (top-right toggle)
+3. Click **Load unpacked** → select the cloned folder
+4. Done — visit [anime3rb.com](https://anime3rb.com)
+
+Or download the latest **[Release ZIP](https://github.com/iiMrDark/anime3rb-adblocker/releases)** and load that folder instead.
+
+---
 
 <div align="center">
 
-Made with ❤️ by [iiMrDark](https://github.com/iiMrDark)
+<sub>crafted in the dark by <a href="https://github.com/iiMrDark"><strong>iiMrDark</strong></a> · 2026</sub>
 
 </div>
